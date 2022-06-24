@@ -13,6 +13,7 @@ namespace KeyQuest
         }
 
         Dictionary<int, List<int>> indexDic = new Dictionary<int, List<int>>();
+        byte[] data;
         string[] dbBytes = new string[10000];
         string[] dbTexts1 = new string[10000];
         string[] dbTexts2= new string[10000];
@@ -25,17 +26,63 @@ namespace KeyQuest
         int[] dbHR = new int[10000];
         int[] dbIDs = new int[10000];
         int selIndex = 0;
+        int keyQuestCount = 0;
 
         int[] HR1IDs = new int[10000];
         int[] HR1Info = new int[10000];
         int[] HR2IDs = new int[10000];
         int[] HR2Info = new int[10000];
+        int[] HR3IDs = new int[10000];
+        int[] HR3Info = new int[10000];
+        int[] HR4IDs = new int[10000];
+        int[] HR4Info = new int[10000];
+        int[] HR5IDs = new int[10000];
+        int[] HR5Info = new int[10000];
+        int[] HR6IDs = new int[10000];
+        int[] HR6Info = new int[10000];
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             var num = new List<int>();
             indexDic.Add(0, num);
+            tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
+        }
+
+        private void TabControl1_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+
+            listBoxDat.Items.Clear();
+            int index = tabControl1.SelectedIndex;
+            int[] IDs = GetIDArray(index);
+            int[] infos = GetInfoArray(index);
+            for (int i = 0; i < IDs.Length; i++)
+            {
+                if (IDs[i] != 0)
+                {
+                    if (0 <= Array.IndexOf(dbIDs, IDs[i]))
+                    {
+                        int num = dbIDs.ToList().IndexOf(IDs[i]);
+                        string name = dbTexts1[num];
+                        if (infos[i] == 1)
+                        {
+                            name = "<Key>" + name;
+                        }
+                        else if (infos[i] == 256)
+                        {
+                            name = "<Urgent>" + name;
+                        }
+                        listBoxDat.Items.Add(name);
+                    }
+                }
+                else
+                {
+                    numQuestCount.Value = i;
+                    break;
+                }
+            }
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -277,6 +324,9 @@ namespace KeyQuest
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (listBoxDatabase.Items.Count == 0)
+                return;
+
             DialogResult opneFileDialog = openFileDialog1.ShowDialog();
             if (opneFileDialog == DialogResult.OK)
             {
@@ -284,30 +334,36 @@ namespace KeyQuest
                 if (by[0] == 109)
                 {
                     by = File.ReadAllBytes(openFileDialog1.FileName);   
+                    data = by;
                     int toHR = BitConverter.ToInt32(by, 2712);       //13C1760
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < 6; i++)
                     {
                         int HR = BitConverter.ToInt32(by, toHR + (i * 4));
-                        label1.Text = toHR.ToString();
-                        var listbox = (ListBox)tabControl1.TabPages[i].Controls[1];
                         for (int u = 0; u < 9999; u++)
                         {
                             int id = BitConverter.ToInt16(by, HR + (u * 8));
+                            int info = BitConverter.ToInt16(by, HR + (u * 8) + 4);
                             int[] IDs = GetIDArray(i);
+                            int[] infos = GetInfoArray(i);
                             if (id != 0)
                             {
-                                listbox.Items.Add(id.ToString());
                                 IDs[u] = id;
+                                infos[u] = info;
+                                if (info > 0)
+                                {
+                                    keyQuestCount = keyQuestCount + 1;
+                                }
                             }
                             else
                             {
-                                var numeric = (NumericUpDown)tabControl1.TabPages[i].Controls[0];
-                                numeric.Value = u;
                                 break;
                             }
                         }
                             
                     }
+                    numKey.Value = keyQuestCount;
+                    tabControl1.SelectedIndex = 1;
+                    tabControl1.SelectedIndex = 0;
                 }
                 else
                 {
@@ -318,7 +374,72 @@ namespace KeyQuest
 
         private void button4_Click(object sender, EventArgs e)
         {
+            if (listBoxDat.Items.Count == 0)
+                return;
 
+            var dat = data.ToList();
+            byte[] zero = { 0, 0, 0, 0, 0, 0, 0, 0 };
+            int basePointer = data.Length;
+            byte[] by = BitConverter.GetBytes(basePointer);
+            dat[2712] = by[0];
+            dat[2713] = by[1];
+            dat[2714] = by[2];
+            dat[2715] = by[3];
+            int key = 0;
+
+            dat.AddRange(zero);    //for new pointer 32bytes
+            dat.AddRange(zero);
+            dat.AddRange(zero);
+            dat.AddRange(zero);
+
+            for (int i = 0; i < 6; i++)
+            {
+                int newPointer = dat.Count;
+                byte[] by1 = BitConverter.GetBytes(newPointer);
+                label1.Text = newPointer.ToString();
+                dat[basePointer + (i * 4) + 0] = by1[0];
+                dat[basePointer + (i * 4) + 1] = by1[1];
+                dat[basePointer + (i * 4) + 2] = by1[2];
+                dat[basePointer + (i * 4) + 3] = by1[3];
+
+                int[] IDs = GetIDArray(i);
+                int[] infos = GetInfoArray(i);
+                //var add = new List<byte>();
+                for (int j = 0; j < IDs.Length; j++)
+                {
+                    if (IDs[j] != 0)
+                    {
+                        byte[] quest = { 0, 0, 0, 0, 0, 0, 0, 0 };
+                        by = BitConverter.GetBytes(IDs[j]);
+                        quest[0] = by[0];
+                        quest[1] = by[1];
+                        if (infos[j] == 256)
+                        {
+                            quest[5] = 1;       //urgent
+                            quest[2] = (byte)key;
+                            key = key + 1;
+                        }
+                        else if (infos[j] == 1)      //key
+                        {
+                            quest[4] = 1;
+                            quest[2] = (byte)key;
+                            key = key + 1;
+                        }
+                        else
+                        {
+
+                        }
+                        dat.AddRange(quest);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                dat.AddRange(zero);
+
+            }
+            File.WriteAllBytes("output/mhfdat.bin", dat.ToArray());
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -382,11 +503,13 @@ namespace KeyQuest
         {
             if (listBoxDat.Items.Count != 0 && listBoxDat.SelectedIndex != -1 && listBoxDatabase.Items.Count != 0)
             {
-                int id = HR1IDs[listBoxDat.SelectedIndex];
+                int[] ids = GetIDArray(tabControl1.SelectedIndex);
+                int id = ids[listBoxDat.SelectedIndex];
+                int[] infos = GetInfoArray(tabControl1.SelectedIndex);
+                int info = infos[listBoxDat.SelectedIndex];
                 if (0 <= Array.IndexOf(dbIDs, id))
                 {
                     int num = dbIDs.ToList().IndexOf(id);
-
                     textBox1.Text = dbTexts1[num];
                     textBox2.Text = dbTexts2[num];
                     textBox3.Text = dbTexts3[num];
@@ -395,6 +518,24 @@ namespace KeyQuest
                     textBox6.Text = dbTexts6[num];
                     textBox7.Text = dbTexts7[num];
                     textBox8.Text = dbTexts8[num];
+
+                    if (info == 256)
+                    {
+                        radioUrgent.Checked = true;
+                    }
+                    else if (info ==1)      //key
+                    {
+                        radioKey.Checked = true;
+                    }
+                    else               
+                    {
+                        radioNone.Checked = true;
+                    }
+
+                    labelHR.Text = dbHR[num].ToString();
+                    labelID.Text = dbIDs[num].ToString();
+
+
                 }
             }
         }
@@ -410,29 +551,48 @@ namespace KeyQuest
                 case 1:
                     ids = HR2IDs;
                     break;
+                case 2:
+                    ids = HR3IDs;
+                    break;
+                case 3:
+                    ids = HR4IDs;
+                    break;
+                case 4:
+                    ids = HR5IDs;
+                    break;
+                case 5:
+                    ids = HR6IDs;
+                    break;
             }
             return ids;
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        int[] GetInfoArray(int num)
         {
-            if (listBox1.Items.Count != 0 && listBox1.SelectedIndex != -1 && listBoxDatabase.Items.Count != 0)
+            int[] info = new int[10000];
+            switch (num)
             {
-                int id = HR2IDs[listBox1.SelectedIndex];
-                if (0 <= Array.IndexOf(dbIDs, id))
-                {
-                    int num = dbIDs.ToList().IndexOf(id);
-
-                    textBox1.Text = dbTexts1[num];
-                    textBox2.Text = dbTexts2[num];
-                    textBox3.Text = dbTexts3[num];
-                    textBox4.Text = dbTexts4[num];
-                    textBox5.Text = dbTexts5[num];
-                    textBox6.Text = dbTexts6[num];
-                    textBox7.Text = dbTexts7[num];
-                    textBox8.Text = dbTexts8[num];
-                }
+                case 0:
+                    info = HR1Info;
+                    break;
+                case 1:
+                    info = HR2Info;
+                    break;
+                case 2:
+                    info = HR3Info;
+                    break;
+                case 3:
+                    info = HR4Info;
+                    break;
+                case 4:
+                    info = HR5Info;
+                    break;
+                case 5:
+                    info = HR6Info;
+                    break;
             }
+            return info;
         }
+
     }
 }
