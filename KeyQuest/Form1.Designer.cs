@@ -63,7 +63,6 @@
             this.labelHR = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelID = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -77,9 +76,12 @@
             this.radioUrgent = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuestCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numKey)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -394,21 +396,23 @@
             0,
             0,
             0});
-            this.numKey.Location = new System.Drawing.Point(668, 25);
+            this.numKey.Location = new System.Drawing.Point(850, 16);
             this.numKey.Name = "numKey";
             this.numKey.ReadOnly = true;
             this.numKey.Size = new System.Drawing.Size(56, 23);
             this.numKey.TabIndex = 12;
+            this.numKey.Visible = false;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Yu Gothic UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(730, 28);
+            this.label17.Location = new System.Drawing.Point(912, 19);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(31, 20);
             this.label17.TabIndex = 13;
             this.label17.Text = "/63";
+            this.label17.Visible = false;
             // 
             // labelHR
             // 
@@ -436,15 +440,6 @@
             this.labelID.Size = new System.Drawing.Size(38, 15);
             this.labelID.TabIndex = 17;
             this.labelID.Text = "label1";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(558, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 15);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "label1";
             // 
             // textBox2
             // 
@@ -516,35 +511,38 @@
             // radioNone
             // 
             this.radioNone.AutoSize = true;
-            this.radioNone.Location = new System.Drawing.Point(730, 107);
+            this.radioNone.Location = new System.Drawing.Point(14, 6);
             this.radioNone.Name = "radioNone";
             this.radioNone.Size = new System.Drawing.Size(54, 19);
             this.radioNone.TabIndex = 27;
             this.radioNone.TabStop = true;
             this.radioNone.Text = "None";
             this.radioNone.UseVisualStyleBackColor = true;
+            this.radioNone.CheckedChanged += new System.EventHandler(this.radioNone_CheckedChanged);
             // 
             // radioKey
             // 
             this.radioKey.AutoSize = true;
-            this.radioKey.Location = new System.Drawing.Point(790, 107);
+            this.radioKey.Location = new System.Drawing.Point(74, 6);
             this.radioKey.Name = "radioKey";
             this.radioKey.Size = new System.Drawing.Size(44, 19);
             this.radioKey.TabIndex = 28;
             this.radioKey.TabStop = true;
             this.radioKey.Text = "Key";
             this.radioKey.UseVisualStyleBackColor = true;
+            this.radioKey.CheckedChanged += new System.EventHandler(this.radioKey_CheckedChanged);
             // 
             // radioUrgent
             // 
             this.radioUrgent.AutoSize = true;
-            this.radioUrgent.Location = new System.Drawing.Point(840, 107);
+            this.radioUrgent.Location = new System.Drawing.Point(124, 6);
             this.radioUrgent.Name = "radioUrgent";
             this.radioUrgent.Size = new System.Drawing.Size(61, 19);
             this.radioUrgent.TabIndex = 29;
             this.radioUrgent.TabStop = true;
             this.radioUrgent.Text = "Urgent";
             this.radioUrgent.UseVisualStyleBackColor = true;
+            this.radioUrgent.CheckedChanged += new System.EventHandler(this.radioUrgent_CheckedChanged);
             // 
             // label2
             // 
@@ -564,18 +562,34 @@
             this.label3.TabIndex = 31;
             this.label3.Text = "ID";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.radioNone);
+            this.panel1.Controls.Add(this.radioKey);
+            this.panel1.Controls.Add(this.radioUrgent);
+            this.panel1.Location = new System.Drawing.Point(721, 101);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 39);
+            this.panel1.TabIndex = 32;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(669, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 81);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "HR1 = 1\r\nHR2 = 2~30\r\nHR3 = 31~50\r\nHR4 = 51 ~99\r\nHR5,6 = 100~";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 653);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numQuestCount);
-            this.Controls.Add(this.radioUrgent);
             this.Controls.Add(this.listBoxDat);
-            this.Controls.Add(this.radioKey);
-            this.Controls.Add(this.radioNone);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.textBox6);
@@ -583,7 +597,6 @@
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.labelID);
             this.Controls.Add(this.labelHR);
             this.Controls.Add(this.textBox1);
@@ -600,12 +613,15 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "KeyQuset";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numQuestCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numKey)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -648,7 +664,6 @@
         private Label labelHR;
         private TextBox textBox1;
         private Label labelID;
-        private Label label1;
         private TextBox textBox2;
         private TextBox textBox3;
         private TextBox textBox4;
@@ -662,5 +677,7 @@
         private RadioButton radioUrgent;
         private Label label2;
         private Label label3;
+        private Panel panel1;
+        private Label label1;
     }
 }
