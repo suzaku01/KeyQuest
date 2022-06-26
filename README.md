@@ -6,7 +6,7 @@ After your build, create two empty folder to the same directory where exe create
 
 # Usage
 If you already have `database.bin` from questlists_manager put it to `data` folder.  
-Othereise create new database file. Check readme of questlists_manager for more details about it.  
+Otherwise create a new database file. Check readme of questlists_manager for more details about it.  
 
 Load database.  
 Load decrypted `mhfdat.bin`.  
