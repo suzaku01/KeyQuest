@@ -1,4 +1,5 @@
-I just noticed that database function I introduced in list manager is very useful so decided to make a form for key and urgent quest inside mhfdat.bin.
+I just noticed that database function I introduced in list manager is very useful so decided to make this.  
+This is a tool to easily manage HR and GR quest ID lists.
 
 # Build
 After your build, create two empty folder to the same directory where exe created. Rename those `data` and `output`.
