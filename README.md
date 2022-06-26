@@ -6,8 +6,8 @@ After your build, create two empty folder to the same directory where exe create
 
 # Usage
 If you already have `database.bin` from questlists_manager put it to `data` folder.  
-Othereise create new database file. Check readme of questlists_manager for more detail about it.  
+Othereise create new database file. Check readme of questlists_manager for more details about it.  
 
 Load decrypted `mhfdat.bin`.  
-Add or delete quest, set normal or key or urgent flag to quests  
+Add or delete quest, set normal or key or urgent flag to quests.  
 Save and you'll get new `mhfdat.bin` inside `output` folder.
