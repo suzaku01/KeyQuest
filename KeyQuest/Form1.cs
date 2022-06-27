@@ -69,6 +69,7 @@ namespace KeyQuest
             var num = new List<int>();
             indexDic.Add(0, num);
             tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
+            listBoxDatabase.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxSearchBox_KeyUp);
         }
 
         private void TabControl1_SelectedIndexChanged(object? sender, EventArgs e)
@@ -531,7 +532,7 @@ namespace KeyQuest
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (isLoaded && listBoxDat.SelectedIndex != -1)
+            if (isLoaded && listBoxDatabase.SelectedIndex != -1)
             {
                 int ID = dbIDs[selIndex];
                 int[] ids = GetIDArray(tabControl1.SelectedIndex);
@@ -951,6 +952,35 @@ namespace KeyQuest
                     string str = dbTexts1[num];
                     str = "<Mark>" + str;
                     listBoxDat.Items[index] = str;
+                }
+            }
+        }
+
+        private void textBoxSearchBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            //F1ÉLÅ[Ç™âüÇ≥ÇÍÇΩÇ©í≤Ç◊ÇÈ
+            if (e.KeyData == Keys.Enter)
+            {
+                if (isLoaded && listBoxDatabase.SelectedIndex != -1)
+                {
+                    int ID = dbIDs[selIndex];
+                    int[] ids = GetIDArray(tabControl1.SelectedIndex);
+                    for (int j = 0; j < ids.Length; j++)
+                    {
+                        if (ids[j] != 0)
+                        {
+
+                        }
+                        else
+                        {
+                            ids[j] = ID;
+                            break;
+                        }
+                    }
+
+                    string name = dbTexts1[selIndex];
+                    listBoxDat.Items.Add(name);
+                    numQuestCount.Value = numQuestCount.Value + 1;
                 }
             }
         }
