@@ -13,3 +13,11 @@ Load database.
 Load decrypted `mhfdat.bin`.  
 Add or delete quest, set normal or key or urgent flag to quests.  
 Save and you'll get new `mhfdat.bin` inside `output` folder.
+
+- None --- Just a normal quest.
+- Key --- Set as a Key Quest
+- Mark --- Mark quest like a Key Quest. Once you have cleared it it marked as "Cleared". But this is not a key quest.
+- Urgent --- Set as a Urgent Quest. Normaly only 1 quest per Rank.
+
+It is said that you can have up to 63 quests with flag(Key+Urgent) in total (Thank you Malckyor for information).   
+Setting Key or Urgent flag to GR quest doesn't do anything.
