@@ -2,6 +2,8 @@ I just noticed that database function I introduced in list manager is very usefu
 This is a tool to easily manage HR and GR quest ID lists.  
 This is for personal use. There is no guarantee.  
 
+# Still WIP. Do not use until this message is removed.
+
 # Build
 After your build, create two empty folder to the same directory where exe created. Rename those `data` and `output`.
 
