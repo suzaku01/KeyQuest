@@ -423,7 +423,7 @@ namespace KeyQuest
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (listBoxDat.Items.Count == 0)
+            if (!isLoaded)
                 return;
 
             var dat = data.ToList();
@@ -508,7 +508,7 @@ namespace KeyQuest
                                 quest[4] = 1;
                                 quest[2] = (byte)key;
                             }
-                            else if (infos[j] == 2)     //for some special
+                            else if (infos[j] == 2)     //mark
                             {
                                 quest[4] = 1;
                             }
@@ -531,7 +531,7 @@ namespace KeyQuest
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (listBoxDatabase.SelectedIndex != -1 && listBoxDatabase.Items.Count != 0)
+            if (isLoaded && listBoxDat.SelectedIndex != -1)
             {
                 int ID = dbIDs[selIndex];
                 int[] ids = GetIDArray(tabControl1.SelectedIndex);
@@ -556,19 +556,20 @@ namespace KeyQuest
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (listBoxDatabase.SelectedIndex != -1 && listBoxDatabase.Items.Count != 0)
+            if (isLoaded && listBoxDat.SelectedIndex != -1)
             {
                 int index = tabControl1.SelectedIndex;
                 int[] ids = GetIDArray(index);
                 ids[listBoxDat.SelectedIndex] = 99999;
                 listBoxDat.Items.RemoveAt(listBoxDat.SelectedIndex);
+                listBoxDat.SetSelected(Math.Max(index - 1, 0), true);
                 numQuestCount.Value = numQuestCount.Value - 1;
             }
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (listBoxDat.Items.Count > 1 && listBoxDat.SelectedIndex != -1)
+            if (isLoaded && listBoxDat.SelectedIndex != -1)
             {
                 int curIndex = listBoxDat.SelectedIndex;
                 int newIndex = listBoxDat.SelectedIndex - 1;
@@ -587,7 +588,7 @@ namespace KeyQuest
 
         private void button8_Click(object sender, EventArgs e)
         {
-            if (listBoxDat.Items.Count > 1 && listBoxDat.SelectedIndex != -1)
+            if (isLoaded && listBoxDat.SelectedIndex != -1)
             {
                 int curIndex = listBoxDat.SelectedIndex;
                 int newIndex = Math.Min(listBoxDat.SelectedIndex + 1, listBoxDat.Items.Count);
@@ -707,6 +708,10 @@ namespace KeyQuest
                     else if (info ==1)      //key
                     {
                         radioKey.Checked = true;
+                    }
+                    else if (info ==2)
+                    {
+                        radiomark.Checked = true;
                     }
                     else               
                     {
@@ -918,6 +923,26 @@ namespace KeyQuest
                     int num = dbIDs.ToList().IndexOf(id);
                     string str = dbTexts1[num];
                     str = "<Urgent>" + str;
+                    listBoxDat.Items[index] = str;
+                }
+            }
+        }
+
+        private void radioTest_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radiomark.Checked && isLoaded)
+            {
+                int index = listBoxDat.SelectedIndex;
+                int[] ids = GetIDArray(tabControl1.SelectedIndex);
+                int id = ids[index];
+                int[] infos = GetInfoArray(tabControl1.SelectedIndex);
+                infos[index] = 2;
+
+                if (0 <= Array.IndexOf(dbIDs, id))
+                {
+                    int num = dbIDs.ToList().IndexOf(id);
+                    string str = dbTexts1[num];
+                    str = "<Mark>" + str;
                     listBoxDat.Items[index] = str;
                 }
             }

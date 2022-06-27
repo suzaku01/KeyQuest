@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -78,6 +79,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.radiomark = new System.Windows.Forms.RadioButton();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuestCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numKey)).BeginInit();
@@ -417,7 +420,7 @@
             // labelHR
             // 
             this.labelHR.AutoSize = true;
-            this.labelHR.Location = new System.Drawing.Point(623, 87);
+            this.labelHR.Location = new System.Drawing.Point(618, 95);
             this.labelHR.Name = "labelHR";
             this.labelHR.Size = new System.Drawing.Size(38, 15);
             this.labelHR.TabIndex = 15;
@@ -435,7 +438,7 @@
             // labelID
             // 
             this.labelID.AutoSize = true;
-            this.labelID.Location = new System.Drawing.Point(623, 111);
+            this.labelID.Location = new System.Drawing.Point(618, 119);
             this.labelID.Name = "labelID";
             this.labelID.Size = new System.Drawing.Size(38, 15);
             this.labelID.TabIndex = 17;
@@ -535,7 +538,7 @@
             // radioUrgent
             // 
             this.radioUrgent.AutoSize = true;
-            this.radioUrgent.Location = new System.Drawing.Point(124, 6);
+            this.radioUrgent.Location = new System.Drawing.Point(177, 6);
             this.radioUrgent.Name = "radioUrgent";
             this.radioUrgent.Size = new System.Drawing.Size(61, 19);
             this.radioUrgent.TabIndex = 29;
@@ -547,7 +550,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(594, 87);
+            this.label2.Location = new System.Drawing.Point(589, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(23, 15);
             this.label2.TabIndex = 30;
@@ -556,7 +559,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(594, 111);
+            this.label3.Location = new System.Drawing.Point(589, 119);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(18, 15);
             this.label3.TabIndex = 31;
@@ -564,21 +567,34 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.radiomark);
             this.panel1.Controls.Add(this.radioNone);
             this.panel1.Controls.Add(this.radioKey);
             this.panel1.Controls.Add(this.radioUrgent);
-            this.panel1.Location = new System.Drawing.Point(721, 101);
+            this.panel1.Location = new System.Drawing.Point(662, 101);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 39);
+            this.panel1.Size = new System.Drawing.Size(280, 39);
             this.panel1.TabIndex = 32;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(669, 9);
+            this.label1.Location = new System.Drawing.Point(735, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(93, 81);
             this.label1.TabIndex = 33;
-            this.label1.Text = "HR1 = 1\r\nHR2 = 2~30\r\nHR3 = 31~50\r\nHR4 = 51 ~99\r\nHR5,6 = 100~";
+            this.label1.Text = "HR1 = 0~1\r\nHR2 = 2~30\r\nHR3 = 31~50\r\nHR4 = 51 ~99\r\nHR5,6 = 100~";
+            // 
+            // radiomark
+            // 
+            this.radiomark.AutoSize = true;
+            this.radiomark.Location = new System.Drawing.Point(124, 6);
+            this.radiomark.Name = "radiomark";
+            this.radiomark.Size = new System.Drawing.Size(52, 19);
+            this.radiomark.TabIndex = 34;
+            this.radiomark.TabStop = true;
+            this.radiomark.Text = "Mark";
+            this.radiomark.UseVisualStyleBackColor = true;
+            this.radiomark.CheckedChanged += new System.EventHandler(this.radioTest_CheckedChanged);
             // 
             // Form1
             // 
@@ -679,5 +695,7 @@
         private Label label3;
         private Panel panel1;
         private Label label1;
+        private RadioButton radiomark;
+        private ToolTip toolTip1;
     }
 }
