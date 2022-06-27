@@ -556,13 +556,20 @@ namespace KeyQuest
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (isLoaded && listBoxDat.SelectedIndex != -1)
+            int selinde = listBoxDat.SelectedIndex;
+            if (isLoaded && selinde != -1)
             {
                 int index = tabControl1.SelectedIndex;
+                //if (listBoxDat.SelectedIndex == 0)
+                //    return;
+
                 int[] ids = GetIDArray(index);
-                ids[listBoxDat.SelectedIndex] = 99999;
-                listBoxDat.Items.RemoveAt(listBoxDat.SelectedIndex);
-                listBoxDat.SetSelected(Math.Max(index - 1, 0), true);
+                ids[selinde] = 99999;
+                listBoxDat.Items.RemoveAt(selinde);
+                if (listBoxDat.Items.Count != 0)
+                {
+                    listBoxDat.SetSelected(Math.Max(selinde - 1, 0), true);
+                }
                 numQuestCount.Value = numQuestCount.Value - 1;
             }
         }
