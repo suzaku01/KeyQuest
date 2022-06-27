@@ -266,7 +266,7 @@ namespace KeyQuest
             path = path + "/data";
             string[] fileNamesArray = Directory.GetFiles(path).Select(Path.GetFileName).ToArray();
 
-            if (fileNamesArray.Contains("database.bin"))
+            if (fileNamesArray.Contains("database.bin") && !isLoaded)
             {
                 byte[] byteData = File.ReadAllBytes("data/database.bin");
                 int count = BitConverter.ToUInt16(byteData, 0);
@@ -356,6 +356,40 @@ namespace KeyQuest
                 byte[] by = File.ReadAllBytes(openFileDialog1.FileName);
                 if (by[0] == 109)
                 {
+                    HR1IDs = new int[10000];
+                    HR1Info = new int[10000];
+                    HR2IDs = new int[10000];
+                    HR2Info = new int[10000];
+                    HR3IDs = new int[10000];
+                    HR3Info = new int[10000];
+                    HR4IDs = new int[10000];
+                    HR4Info = new int[10000];
+                    HR5IDs = new int[10000];
+                    HR5Info = new int[10000];
+                    HR6IDs = new int[10000];
+                    HR6Info = new int[10000];
+
+                    G1IDs = new int[10000];
+                    G1Info = new int[10000];
+                    G2IDs = new int[10000];
+                    G2Info = new int[10000];
+                    G3IDs = new int[10000];
+                    G3Info = new int[10000];
+                    G4IDs = new int[10000];
+                    G4Info = new int[10000];
+                    G5IDs = new int[10000];
+                    G5Info = new int[10000];
+                    G6IDs = new int[10000];
+                    G6Info = new int[10000];
+                    G7IDs = new int[10000];
+                    G7Info = new int[10000];
+                    G8IDs = new int[10000];
+                    G8Info = new int[10000];
+                    G9IDs = new int[10000];
+                    G9Info = new int[10000];
+                    G10IDs = new int[10000];
+                    G10Info = new int[10000];
+
                     isLoaded = true;
                     by = File.ReadAllBytes(openFileDialog1.FileName);   
                     data = by;
@@ -384,9 +418,9 @@ namespace KeyQuest
                             HR = BitConverter.ToInt32(by, toGR);
                         }
 
-                        for (int u = 0; u < 9999; u++)
+                        for (int u = 0; u < 99999; u++)
                         {
-                            int id = BitConverter.ToInt16(by, HR + (u * 8));
+                            int id = BitConverter.ToUInt16(by, HR + (u * 8));
                             int info = BitConverter.ToInt16(by, HR + (u * 8) + 4);      //1=key, 256 = urgent, 2=has flasg but not key nor urgent
                             int flag = BitConverter.ToInt16(by, HR + (u * 8) + 2);
                             int[] IDs = GetIDArray(i);
@@ -527,6 +561,14 @@ namespace KeyQuest
                 }
                 dat.AddRange(zero);
             }
+            dat.AddRange(zero);
+            dat.AddRange(zero);
+            dat.AddRange(zero);
+            dat.AddRange(zero);
+            dat.AddRange(zero);
+            dat.AddRange(zero);
+            dat.AddRange(zero);
+            dat.AddRange(zero);
             File.WriteAllBytes("output/mhfdat.bin", dat.ToArray());
         }
 

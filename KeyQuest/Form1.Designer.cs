@@ -78,8 +78,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.radiomark = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuestCount)).BeginInit();
@@ -387,6 +387,11 @@
             0,
             0});
             this.numQuestCount.Location = new System.Drawing.Point(430, 132);
+            this.numQuestCount.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
             this.numQuestCount.Name = "numQuestCount";
             this.numQuestCount.ReadOnly = true;
             this.numQuestCount.Size = new System.Drawing.Size(120, 23);
@@ -576,14 +581,6 @@
             this.panel1.Size = new System.Drawing.Size(280, 39);
             this.panel1.TabIndex = 32;
             // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(735, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(93, 81);
-            this.label1.TabIndex = 33;
-            this.label1.Text = "HR1 = 0~1\r\nHR2 = 2~30\r\nHR3 = 31~50\r\nHR4 = 51 ~99\r\nHR5,6 = 100~";
-            // 
             // radiomark
             // 
             this.radiomark.AutoSize = true;
@@ -595,6 +592,14 @@
             this.radiomark.Text = "Mark";
             this.radiomark.UseVisualStyleBackColor = true;
             this.radiomark.CheckedChanged += new System.EventHandler(this.radioTest_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(735, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 81);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "HR1 = 0~1\r\nHR2 = 2~30\r\nHR3 = 31~50\r\nHR4 = 51 ~99\r\nHR5,6 = 100~";
             // 
             // Form1
             // 
