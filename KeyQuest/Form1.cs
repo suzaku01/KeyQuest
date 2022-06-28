@@ -14,17 +14,17 @@ namespace KeyQuest
 
         Dictionary<int, List<int>> indexDic = new Dictionary<int, List<int>>();
         byte[] data;
-        string[] dbBytes = new string[10000];
-        string[] dbTexts1 = new string[10000];
-        string[] dbTexts2= new string[10000];
-        string[] dbTexts3 = new string[10000];
-        string[] dbTexts4= new string[10000];
-        string[] dbTexts5 = new string[10000];
-        string[] dbTexts6 = new string[10000];
-        string[] dbTexts7 = new string[10000];
-        string[] dbTexts8 = new string[10000];
-        int[] dbHR = new int[10000];
-        int[] dbIDs = new int[10000];
+        string[] dbBytes = new string[60000];
+        string[] dbTexts1 = new string[60000];
+        string[] dbTexts2= new string[60000];
+        string[] dbTexts3 = new string[60000];
+        string[] dbTexts4= new string[60000];
+        string[] dbTexts5 = new string[60000];
+        string[] dbTexts6 = new string[60000];
+        string[] dbTexts7 = new string[60000];
+        string[] dbTexts8 = new string[60000];
+        int[] dbHR = new int[60000];
+        int[] dbIDs = new int[60000];
         int selIndex = 0;
         int keyQuestCount = 0;
         bool isLoaded = false;
