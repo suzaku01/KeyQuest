@@ -1035,11 +1035,5 @@ namespace KeyQuest
                 }
             }
         }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            byte[] bb = { 0 };
-            int gh = bb[10];
-        }
     }
 }
