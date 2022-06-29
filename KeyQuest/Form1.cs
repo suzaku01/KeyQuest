@@ -420,28 +420,37 @@ namespace KeyQuest
 
                         for (int u = 0; u < 99999; u++)
                         {
-                            int id = BitConverter.ToUInt16(by, HR + (u * 8));
-                            int info = BitConverter.ToInt16(by, HR + (u * 8) + 4);      //1=key, 256 = urgent, 2=has flasg but not key nor urgent
-                            int flag = BitConverter.ToInt16(by, HR + (u * 8) + 2);
-                            int[] IDs = GetIDArray(i);
-                            int[] infos = GetInfoArray(i);
-                            if (id != 0)
+                            int po = HR + (u * 8);
+                            if (po < by.Length && po != by.Length)
                             {
-                                if (flag > 0 && i < 6)
+                                int id = BitConverter.ToInt16(by, po);
+                                int info = BitConverter.ToInt16(by, HR + (u * 8) + 4);      //1=key, 256 = urgent, 2=has flasg but not key nor urgent
+                                int flag = BitConverter.ToInt16(by, HR + (u * 8) + 2);
+                                int[] IDs = GetIDArray(i);
+                                int[] infos = GetInfoArray(i);
+                                if (id != 0)
                                 {
-                                    keyQuestCount = keyQuestCount + 1;
+                                    if (flag > 0 && i < 6)
+                                    {
+                                        keyQuestCount = keyQuestCount + 1;
+                                    }
+                                    else if (info > 0)
+                                    {
+                                        info = 2;
+                                    }
+                                    IDs[u] = id;
+                                    infos[u] = info;
                                 }
-                                else if (info > 0)
+                                else
                                 {
-                                    info = 2;
+                                    break;
                                 }
-                                IDs[u] = id;
-                                infos[u] = info;
                             }
                             else
                             {
                                 break;
                             }
+
                         }
                             
                     }
@@ -1025,6 +1034,12 @@ namespace KeyQuest
                     numQuestCount.Value = numQuestCount.Value + 1;
                 }
             }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            byte[] bb = { 0 };
+            int gh = bb[10];
         }
     }
 }

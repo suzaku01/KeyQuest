@@ -81,6 +81,7 @@
             this.radiomark = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button9 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuestCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numKey)).BeginInit();
@@ -601,11 +602,22 @@
             this.label1.TabIndex = 33;
             this.label1.Text = "HR1 = 0~1\r\nHR2 = 2~30\r\nHR3 = 31~50\r\nHR4 = 51 ~99\r\nHR5,6 = 100~";
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(573, 31);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 34;
+            this.button9.Text = "button9";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 653);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -702,5 +714,6 @@
         private Label label1;
         private RadioButton radiomark;
         private ToolTip toolTip1;
+        private Button button9;
     }
 }
