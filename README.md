@@ -26,4 +26,4 @@ Adding a quest that doesn't exist in mhfinf or mhfdat is considered as none ques
 To prevent this issue you need to add that quest to questlists. It doesn't matter which type(Evetn, Campaign, etc.).
 
 # Known issues
-- Every time you hit save button this app adds bytes of quest IDs at the end of file, this will this will result in increasing size of file a bit.
+- Every time you hit save button this app adds bytes of quest IDs at the end of file, this will result in increasing size of file a bit.
