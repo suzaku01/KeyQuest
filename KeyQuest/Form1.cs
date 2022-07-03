@@ -1101,22 +1101,17 @@ namespace KeyQuest
                 {
                     int ID = dbIDs[selIndex];
                     int[] ids = GetIDArray(tabControl1.SelectedIndex);
-                    for (int j = 0; j < ids.Length; j++)
-                    {
-                        if (ids[j] != 0)
-                        {
+                    int[] infos = GetInfoArray(tabControl1.SelectedIndex);
+                    List<int> idlist = ids.ToList();
+                    List<int> infolist = infos.ToList();
 
-                        }
-                        else
-                        {
-                            ids[j] = ID;
-                            break;
-                        }
-                    }
+                    idlist.Add(ID);
+                    infolist.Add(0);
+                    ChangeArray(tabControl1.SelectedIndex, idlist.ToArray(), infolist.ToArray());
 
                     string name = dbTexts1[selIndex];
                     listBoxDat.Items.Add(name);
-                    //numQuestCount.Value = numQuestCount.Value + 1;
+                    numQuestCount.Value = numQuestCount.Value + 1;
                 }
             }
         }
