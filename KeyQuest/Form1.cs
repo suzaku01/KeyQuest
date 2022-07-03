@@ -16,9 +16,9 @@ namespace KeyQuest
         byte[] data;
         string[] dbBytes = new string[60000];
         string[] dbTexts1 = new string[60000];
-        string[] dbTexts2= new string[60000];
+        string[] dbTexts2 = new string[60000];
         string[] dbTexts3 = new string[60000];
-        string[] dbTexts4= new string[60000];
+        string[] dbTexts4 = new string[60000];
         string[] dbTexts5 = new string[60000];
         string[] dbTexts6 = new string[60000];
         string[] dbTexts7 = new string[60000];
@@ -82,30 +82,29 @@ namespace KeyQuest
             int[] infos = GetInfoArray(index);
             for (int i = 0; i < IDs.Length; i++)
             {
-                if (IDs[i] != 0)
+                if (0 <= Array.IndexOf(dbIDs, IDs[i]))
                 {
-                    if (0 <= Array.IndexOf(dbIDs, IDs[i]))
+                    int num = dbIDs.ToList().IndexOf(IDs[i]);
+                    string name = dbTexts1[num];
+                    if (infos[i] == 1)
                     {
-                        int num = dbIDs.ToList().IndexOf(IDs[i]);
-                        string name = dbTexts1[num];
-                        if (infos[i] == 1)
-                        {
-                            name = "<Key>" + name;
-                        }
-                        else if (infos[i] == 256)
-                        {
-                            name = "<Urgent>" + name;
-                        }
-                        listBoxDat.Items.Add(name);
+                        name = "<Key>" + name;
                     }
+                    else if (infos[i] == 256)
+                    {
+                        name = "<Urgent>" + name;
+                    }
+                    else if (infos[i] == 2)
+                    {
+                        name = "<Mark>" + name;
+                    }
+                    listBoxDat.Items.Add(name);
                 }
-                else
-                {
-                    numQuestCount.Value = i;
-                    break;
-                }
+
+                numQuestCount.Value = i;
+
             }
-           
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -356,42 +355,42 @@ namespace KeyQuest
                 byte[] by = File.ReadAllBytes(openFileDialog1.FileName);
                 if (by[0] == 109)
                 {
-                    HR1IDs = new int[10000];
-                    HR1Info = new int[10000];
-                    HR2IDs = new int[10000];
-                    HR2Info = new int[10000];
-                    HR3IDs = new int[10000];
-                    HR3Info = new int[10000];
-                    HR4IDs = new int[10000];
-                    HR4Info = new int[10000];
-                    HR5IDs = new int[10000];
-                    HR5Info = new int[10000];
-                    HR6IDs = new int[10000];
-                    HR6Info = new int[10000];
+                    //HR1IDs = new int[10000];
+                    //HR1Info = new int[10000];
+                    //HR2IDs = new int[10000];
+                    //HR2Info = new int[10000];
+                    //HR3IDs = new int[10000];
+                    //HR3Info = new int[10000];
+                    //HR4IDs = new int[10000];
+                    //HR4Info = new int[10000];
+                    //HR5IDs = new int[10000];
+                    //HR5Info = new int[10000];
+                    //HR6IDs = new int[10000];
+                    //HR6Info = new int[10000];
 
-                    G1IDs = new int[10000];
-                    G1Info = new int[10000];
-                    G2IDs = new int[10000];
-                    G2Info = new int[10000];
-                    G3IDs = new int[10000];
-                    G3Info = new int[10000];
-                    G4IDs = new int[10000];
-                    G4Info = new int[10000];
-                    G5IDs = new int[10000];
-                    G5Info = new int[10000];
-                    G6IDs = new int[10000];
-                    G6Info = new int[10000];
-                    G7IDs = new int[10000];
-                    G7Info = new int[10000];
-                    G8IDs = new int[10000];
-                    G8Info = new int[10000];
-                    G9IDs = new int[10000];
-                    G9Info = new int[10000];
-                    G10IDs = new int[10000];
-                    G10Info = new int[10000];
+                    //G1IDs = new int[10000];
+                    //G1Info = new int[10000];
+                    //G2IDs = new int[10000];
+                    //G2Info = new int[10000];
+                    //G3IDs = new int[10000];
+                    //G3Info = new int[10000];
+                    //G4IDs = new int[10000];
+                    //G4Info = new int[10000];
+                    //G5IDs = new int[10000];
+                    //G5Info = new int[10000];
+                    //G6IDs = new int[10000];
+                    //G6Info = new int[10000];
+                    //G7IDs = new int[10000];
+                    //G7Info = new int[10000];
+                    //G8IDs = new int[10000];
+                    //G8Info = new int[10000];
+                    //G9IDs = new int[10000];
+                    //G9Info = new int[10000];
+                    //G10IDs = new int[10000];
+                    //G10Info = new int[10000];
 
                     isLoaded = true;
-                    by = File.ReadAllBytes(openFileDialog1.FileName);   
+                    by = File.ReadAllBytes(openFileDialog1.FileName);
                     data = by;
                     int toHR = BitConverter.ToInt32(by, 2712);       //13C1760
                     for (int i = 0; i < 6 + 10; i++)
@@ -418,6 +417,9 @@ namespace KeyQuest
                             HR = BitConverter.ToInt32(by, toGR);
                         }
 
+                        List<int> IDs = new List<int>();
+                        List<int> infos = new List<int>();
+
                         for (int u = 0; u < 99999; u++)
                         {
                             int po = HR + (u * 8);
@@ -426,8 +428,8 @@ namespace KeyQuest
                                 int id = BitConverter.ToInt16(by, po);
                                 int info = BitConverter.ToInt16(by, HR + (u * 8) + 4);      //1=key, 256 = urgent, 2=has flasg but not key nor urgent
                                 int flag = BitConverter.ToInt16(by, HR + (u * 8) + 2);
-                                int[] IDs = GetIDArray(i);
-                                int[] infos = GetInfoArray(i);
+                                //int[] IDs = GetIDArray(i);
+                                //int[] infos = GetInfoArray(i);
                                 if (id != 0)
                                 {
                                     if (flag > 0 && i < 6)
@@ -438,8 +440,10 @@ namespace KeyQuest
                                     {
                                         info = 2;
                                     }
-                                    IDs[u] = id;
-                                    infos[u] = info;
+                                    IDs.Add(id);
+                                    infos.Add(info);
+                                    //IDs[u] = id;
+                                    //infos[u] = info;
                                 }
                                 else
                                 {
@@ -452,7 +456,8 @@ namespace KeyQuest
                             }
 
                         }
-                            
+                        ChangeArray(i, IDs.ToArray(), infos.ToArray());
+
                     }
                     numKey.Value = keyQuestCount;
                     tabControl1.SelectedIndex = 1;
@@ -487,7 +492,7 @@ namespace KeyQuest
             dat.AddRange(zero);
             dat.AddRange(zero);
             int GRPointer = dat.Count;
-            dat.AddRange(zero);    
+            dat.AddRange(zero);
             dat.AddRange(zero);
             dat.AddRange(zero);
             dat.AddRange(zero);
@@ -519,7 +524,7 @@ namespace KeyQuest
                     dat[1736 + 3 + ((i - 6) * 4)] = by2[3];
                 }
 
-                if (i> 12)      //13,14,15
+                if (i > 12)      //13,14,15
                 {
                     byte[] by3 = BitConverter.GetBytes(GRPointer2 + ((i - 13) * 4));
                     dat[1856 + 0 + ((i - 13) * 4)] = by3[0];
@@ -587,18 +592,13 @@ namespace KeyQuest
             {
                 int ID = dbIDs[selIndex];
                 int[] ids = GetIDArray(tabControl1.SelectedIndex);
-                for (int j = 0; j < ids.Length; j++)
-                {
-                    if (ids[j] != 0)
-                    {
+                int[] infos = GetInfoArray(tabControl1.SelectedIndex);
+                List<int> idlist = ids.ToList();
+                List<int> infolist = infos.ToList();
 
-                    }
-                    else
-                    {
-                        ids[j] = ID;
-                        break;
-                    }
-                }
+                idlist.Add(ID);
+                infolist.Add(0);
+                ChangeArray(tabControl1.SelectedIndex, idlist.ToArray(), infolist.ToArray());
 
                 string name = dbTexts1[selIndex];
                 listBoxDat.Items.Add(name);
@@ -608,21 +608,26 @@ namespace KeyQuest
 
         private void button6_Click(object sender, EventArgs e)
         {
-            int selinde = listBoxDat.SelectedIndex;
-            if (isLoaded && selinde != -1)
+            int index = listBoxDat.SelectedIndex;
+            if (isLoaded && index != -1)
             {
-                int index = tabControl1.SelectedIndex;
-                //if (listBoxDat.SelectedIndex == 0)
-                //    return;
+                int[] ids = GetIDArray(tabControl1.SelectedIndex);
+                int[] infos = GetInfoArray(tabControl1.SelectedIndex);
+                List<int> idlist = ids.ToList();
+                List<int> infolist = infos.ToList();
+                idlist.RemoveAt(index);
+                infolist.RemoveAt(index);
+                //ids = idlist.ToArray();
+                //infos = infolist.ToArray();
+                ChangeArray(tabControl1.SelectedIndex, idlist.ToArray(), infolist.ToArray());
 
-                int[] ids = GetIDArray(index);
-                ids[selinde] = 99999;
-                listBoxDat.Items.RemoveAt(selinde);
+                //ids[index] = 99999;
+                listBoxDat.Items.RemoveAt(index);
                 if (listBoxDat.Items.Count != 0)
                 {
-                    listBoxDat.SetSelected(Math.Max(selinde - 1, 0), true);
+                    listBoxDat.SetSelected(Math.Max(index - 1, 0), true);
                 }
-                numQuestCount.Value = numQuestCount.Value - 1;
+                numQuestCount.Value = Math.Max(numQuestCount.Value - 1, 0);
             }
         }
 
@@ -639,6 +644,9 @@ namespace KeyQuest
                     (ids[curIndex], ids[newIndex]) = (ids[newIndex], ids[curIndex]);
                     int[] infos = GetInfoArray(index);
                     (infos[curIndex], infos[newIndex]) = (infos[newIndex], infos[curIndex]);
+
+                    ChangeArray(tabControl1.SelectedIndex, ids, infos);
+
 
                     MoveUp();
                 }
@@ -658,6 +666,8 @@ namespace KeyQuest
                     (ids[curIndex], ids[newIndex]) = (ids[newIndex], ids[curIndex]);
                     int[] infos = GetInfoArray(index);
                     (infos[curIndex], infos[newIndex]) = (infos[newIndex], infos[curIndex]);
+
+                    ChangeArray(tabControl1.SelectedIndex, ids, infos);
 
                     MoveDown();
                 }
@@ -764,15 +774,15 @@ namespace KeyQuest
                     {
                         radioUrgent.Checked = true;
                     }
-                    else if (info ==1)      //key
+                    else if (info == 1)      //key
                     {
                         radioKey.Checked = true;
                     }
-                    else if (info ==2)
+                    else if (info == 2)
                     {
                         radiomark.Checked = true;
                     }
-                    else               
+                    else
                     {
                         radioNone.Checked = true;
                     }
@@ -791,7 +801,7 @@ namespace KeyQuest
             switch (num)
             {
                 case 0:
-                    ids =  HR1IDs;
+                    ids = HR1IDs;
                     break;
                 case 1:
                     ids = HR2IDs;
@@ -899,6 +909,78 @@ namespace KeyQuest
             return info;
         }
 
+        void ChangeArray(int bangou, int[] IDs, int[] infos)
+        {
+            switch (bangou)
+            {
+                case 0:
+                    HR1IDs = IDs;
+                    HR1Info = infos;
+                    break;
+
+                case 1:
+                    HR2IDs = IDs;
+                    HR2Info = infos;
+                    break;
+                case 2:
+                    HR3IDs = IDs;
+                    HR3Info = infos;
+                    break;
+                case 3:
+                    HR4IDs = IDs;
+                    HR4Info = infos;
+                    break;
+                case 4:
+                    HR5IDs = IDs;
+                    HR5Info = infos;
+                    break;
+                case 5:
+                    HR6IDs = IDs;
+                    HR6Info = infos;
+                    break;
+                case 6:
+                    G1IDs = IDs;
+                    G1Info = infos;
+                    break;
+                case 7:
+                    G2IDs = IDs;
+                    G2Info = infos;
+                    break;
+                case 8:
+                    G3IDs = IDs;
+                    G3Info = infos;
+                    break;
+                case 9:
+                    G4IDs = IDs;
+                    G4Info = infos;
+                    break;
+                case 10:
+                    G5IDs = IDs;
+                    G5Info = infos;
+                    break;
+                case 11:
+                    G6IDs = IDs;
+                    G6Info = infos;
+                    break;
+                case 12:
+                    G7IDs = IDs;
+                    G7Info = infos;
+                    break;
+                case 13:
+                    G8IDs = IDs;
+                    G8Info = infos;
+                    break;
+                case 14:
+                    G9IDs = IDs;
+                    G9Info = infos;
+                    break;
+                case 15:
+                    G10IDs = IDs;
+                    G10Info = infos;
+                    break;
+            }
+        }
+
         public void MoveUp()
         {
             MoveItem(-1);
@@ -943,6 +1025,7 @@ namespace KeyQuest
                     string str = dbTexts1[num];
                     //str = "<Key>" + str;
                     listBoxDat.Items[index] = str;
+                    ChangeArray(tabControl1.SelectedIndex, ids, infos);
                 }
             }
         }
@@ -963,6 +1046,7 @@ namespace KeyQuest
                     string str = dbTexts1[num];
                     str = "<Key>" + str;
                     listBoxDat.Items[index] = str;
+                    ChangeArray(tabControl1.SelectedIndex, ids, infos);
                 }
             }
         }
@@ -983,6 +1067,7 @@ namespace KeyQuest
                     string str = dbTexts1[num];
                     str = "<Urgent>" + str;
                     listBoxDat.Items[index] = str;
+                    ChangeArray(tabControl1.SelectedIndex, ids, infos);
                 }
             }
         }
@@ -1003,13 +1088,13 @@ namespace KeyQuest
                     string str = dbTexts1[num];
                     str = "<Mark>" + str;
                     listBoxDat.Items[index] = str;
+                    ChangeArray(tabControl1.SelectedIndex, ids, infos);
                 }
             }
         }
 
         private void textBoxSearchBox_KeyUp(object sender, KeyEventArgs e)
         {
-            //F1ÉLÅ[Ç™âüÇ≥ÇÍÇΩÇ©í≤Ç◊ÇÈ
             if (e.KeyData == Keys.Enter)
             {
                 if (isLoaded && listBoxDatabase.SelectedIndex != -1)
@@ -1031,7 +1116,7 @@ namespace KeyQuest
 
                     string name = dbTexts1[selIndex];
                     listBoxDat.Items.Add(name);
-                    numQuestCount.Value = numQuestCount.Value + 1;
+                    //numQuestCount.Value = numQuestCount.Value + 1;
                 }
             }
         }
