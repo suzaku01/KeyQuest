@@ -28,6 +28,7 @@ namespace KeyQuest
         int selIndex = 0;
         int keyQuestCount = 0;
         bool isLoaded = false;
+        bool isPending = false;
 
         int[] HR1IDs = new int[10000];
         int[] HR1Info = new int[10000];
@@ -752,15 +753,16 @@ namespace KeyQuest
 
         private void listBoxDat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxDat.Items.Count != 0 && listBoxDat.SelectedIndex != -1 && listBoxDatabase.Items.Count != 0)
+            if (isLoaded && listBoxDat.SelectedIndex != -1 && !isPending)
             {
                 int[] ids = GetIDArray(tabControl1.SelectedIndex);
-                int id = ids[listBoxDat.SelectedIndex];
                 int[] infos = GetInfoArray(tabControl1.SelectedIndex);
+
+                int id = ids[listBoxDat.SelectedIndex];
                 int info = infos[listBoxDat.SelectedIndex];
-                if (0 <= Array.IndexOf(dbIDs, id))
+                int num = dbIDs.ToList().IndexOf(id);
+                if (num != -1)
                 {
-                    int num = dbIDs.ToList().IndexOf(id);
                     textBox1.Text = dbTexts1[num];
                     textBox2.Text = dbTexts2[num];
                     textBox3.Text = dbTexts3[num];
@@ -789,8 +791,17 @@ namespace KeyQuest
 
                     labelHR.Text = dbHR[num].ToString();
                     labelID.Text = dbIDs[num].ToString();
-
-
+                }
+                else
+                {
+                    textBox1.Text = "Could not find the data in databse.";
+                    textBox2.Text = "";
+                    textBox3.Text = "";
+                    textBox4.Text = "";
+                    textBox5.Text = "";
+                    textBox6.Text = "";
+                    textBox7.Text = "";
+                    textBox8.Text = "";
                 }
             }
         }
@@ -993,6 +1004,7 @@ namespace KeyQuest
 
         public void MoveItem(int direction)
         {
+            isPending = true;
             //from StackOverFlow
             if (listBoxDat.SelectedItem == null || listBoxDat.SelectedIndex < 0)
                 return;
@@ -1003,10 +1015,10 @@ namespace KeyQuest
                 return;
 
             object selected = listBoxDat.SelectedItem;
-
             listBoxDat.Items.Remove(selected);
             listBoxDat.Items.Insert(newIndex, selected);
             listBoxDat.SetSelected(newIndex, true);
+            isPending = false;
         }
 
         private void radioNone_CheckedChanged(object sender, EventArgs e)
@@ -1113,6 +1125,38 @@ namespace KeyQuest
                     listBoxDat.Items.Add(name);
                     numQuestCount.Value = numQuestCount.Value + 1;
                 }
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            listBoxDat.Items.Clear();
+            int index = tabControl1.SelectedIndex;
+            int[] IDs = GetIDArray(index);
+            int[] infos = GetInfoArray(index);
+            for (int i = 0; i < IDs.Length; i++)
+            {
+                if (0 <= Array.IndexOf(dbIDs, IDs[i]))
+                {
+                    int num = dbIDs.ToList().IndexOf(IDs[i]);
+                    string name = dbTexts1[num];
+                    if (infos[i] == 1)
+                    {
+                        name = "<Key>" + name;
+                    }
+                    else if (infos[i] == 256)
+                    {
+                        name = "<Urgent>" + name;
+                    }
+                    else if (infos[i] == 2)
+                    {
+                        name = "<Mark>" + name;
+                    }
+                    listBoxDat.Items.Add(name);
+                }
+
+                numQuestCount.Value = i;
+
             }
         }
     }
